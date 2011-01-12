@@ -1,0 +1,4 @@
+SFML and Box2D demo
+--------------------
+
+Implements DebugDraw and has some demo events for creating bodies. Shows also some debuf info (bodycount...)

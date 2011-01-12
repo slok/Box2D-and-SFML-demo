@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Box2DDebug" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Box2DDebug" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Box2DDebug" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../../sources/box2d/Box2D" />
+			<Add directory="include" />
+			<Add directory="../../../../usr/include" />
+		</Compiler>
+		<Linker>
+			<Add option="-lsfml-system" />
+			<Add library="../../sources/box2d/Box2D/Build/Box2D/libBox2D.a" />
+			<Add library="/usr/lib64/libsfml-window.so" />
+			<Add library="/usr/lib64/libsfml-system.so" />
+			<Add library="/usr/lib64/libsfml-network.so" />
+			<Add library="/usr/lib64/libsfml-graphics.so" />
+			<Add library="/usr/lib64/libsfml-audio.so" />
+		</Linker>
+		<Unit filename="include/DebugDraw.h" />
+		<Unit filename="include/GameKernel.h" />
+		<Unit filename="include/Globals.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="src/DebugDraw.cpp" />
+		<Unit filename="src/GameKernel.cpp" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<lib_finder disable_auto="1" />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
