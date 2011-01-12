@@ -16,7 +16,10 @@ int main(int argc, char **argv)
 
     b2World *pWorld = gameController.getPhysicsWorld();
     gameController.ActivateDebugDraw();
-    sf::RenderWindow *rWindow = gameController.getApp() ;
+    sf::RenderWindow *rWindow = gameController.getApp();
+
+    //add icon to the render window
+    gameController.setWindowIcon("resources/icons/box2d.png");
 
 	//box2D step info
 	float32 timeStep = 1.0f / 60.0f;
