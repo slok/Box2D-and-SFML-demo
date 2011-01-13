@@ -290,6 +290,20 @@ void GameKernel::setWindowIcon(std::string imagePath)
 
 }
 
+void GameKernel::setBackground(std::string imagePath, sf::Sprite *bkSprite)
+{
+    sf::Image background;
+    sf::Sprite backgroundSprite;
+
+    background.LoadFromFile("resources/backgrounds/logoHD.png");
+    backgroundSprite.SetPosition(0,0);
+    backgroundSprite.SetImage(background);
+    backgroundSprite.Resize(this->resWidgth,this->resHeigth);
+    backgroundSprite.SetColor(sf::Color(255,255,255,150)); //alpha
+    bkSprite = &backgroundSprite;
+
+}
+
 void GameKernel::printDebugInfo()
 {
     std::string fpsString;

@@ -53,6 +53,9 @@ int main(int argc, char **argv)
     const sf::Input& input = rWindow->GetInput(); //for getting x and y coordiantes of the mouse
     sf::Shape drawingMouseBox; //for displaying white rectangle
     sf::Clock clock; //for the timing of the deletion of bodies out of the screen
+    sf::Sprite *bkSprite;
+
+    gameController.setBackground("resources/backgrounds/logoHD.png", bkSprite);
 
 	while(rWindow->IsOpened())
 	{
@@ -187,8 +190,7 @@ int main(int argc, char **argv)
         //rWindow.Draw(backgroundSprite);
         //draw debug
         pWorld->DrawDebugData();
-        //draw debug information
-        //rWindow.DrawString(0,0,fpsString.c_str());
+        rWindow->Draw(*bkSprite);
 
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.

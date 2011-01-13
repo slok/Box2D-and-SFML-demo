@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2010 Allen Jordan ()
+    Copyright (C) 2011 Allen Jordan ()
     Copyright (C) 2011 Xabier Larrakoetxea (slok)
 
     This program is free software: you can redistribute it and/or modify
