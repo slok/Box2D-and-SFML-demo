@@ -52,7 +52,7 @@ class GameKernel
         void addStaticCircle(int x, int y);
         void addStaticCircle(int x, int y, float radius);
         void setWindowIcon(std::string imagePath);
-        void setBackground(std::string imagePath, sf::Sprite *bkSprite);
+        void setBackground(std::string imagePath, sf::Image *background, sf::Sprite *bkSprite);
         static int randomNumber(int min, int max);
         void printDebugInfo();
         void removePhysicBodies(int leftLimit, int rightLimit, int upLimit, int downLimit);
