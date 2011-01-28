@@ -67,6 +67,7 @@ int main(int argc, char **argv)
     *P: Pause/unpause the game\n\
     *Space: Aleatory box\n\
     *Enter: Aleatory circle\n\
+    *G: Enable/disable grab mode (mouse joint)\n\
     *Right click: if not grab mode, add circle (move and release )\n\
     *Left click: if not grab mode, add box (move and release)";
 
