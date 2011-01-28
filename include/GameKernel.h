@@ -26,6 +26,7 @@
 #include <cstdio>
 #include <list>
 
+#include "Material.h"
 #include "DebugDraw.h"
 #include "Globals.h"
 
@@ -43,12 +44,12 @@ class GameKernel
         sf::RenderWindow *getApp();
         std::list<b2Body*> getphysicsObjectList();
         DebugDraw *getdebugDraw();
-        void addDynamicBox(int x, int y);
-        void addDynamicBox(int x, int y, float heigth, float widgth);
+        void addDynamicBox(int x, int y, Material material);
+        void addDynamicBox(int x, int y, float heigth, float widgth, Material material);
         void addStaticBox(int x, int y);
         void addStaticBox(int x, int y, float heigth, float widgth);
-        void addDynamicCircle(int x, int y);
-        void addDynamicCircle(int x, int y, float radius);
+        void addDynamicCircle(int x, int y, Material material);
+        void addDynamicCircle(int x, int y, float radius, Material material);
         void addStaticCircle(int x, int y);
         void addStaticCircle(int x, int y, float radius);
         void setWindowIcon(std::string imagePath);

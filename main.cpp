@@ -69,12 +69,17 @@ int main(int argc, char **argv)
     *Enter: Aleatory circle\n\
     *G: Enable/disable grab mode (mouse joint)\n\
     *Right click: if not grab mode, add circle (move and release )\n\
-    *Left click: if not grab mode, add box (move and release)";
+    *Left click: if not grab mode, add box (move and release)\n\
+    *0-9 num keys to change material";
 
     //for the joints
     b2BodyDef bodyDef;
 	b2Body* groundBody = pWorld->CreateBody(&bodyDef);
 	b2MouseJoint* mouseJoint;
+
+    //material of the bodies
+    Material material = Material::DEFAULT;
+    std::string materialStr = "Default";
 
 	while(rWindow->IsOpened())
 	{
@@ -99,7 +104,7 @@ int main(int argc, char **argv)
                         if(staticMode)
                             gameController.addStaticBox(GameKernel::randomNumber(0,800),GameKernel::randomNumber(0,600));
                         else
-                            gameController.addDynamicBox(GameKernel::randomNumber(0,800),GameKernel::randomNumber(0,600));
+                            gameController.addDynamicBox(GameKernel::randomNumber(0,800),GameKernel::randomNumber(0,600), material);
 
                         break;
                     }
@@ -108,7 +113,7 @@ int main(int argc, char **argv)
                         if(staticMode)
                             gameController.addStaticCircle(GameKernel::randomNumber(0,800),GameKernel::randomNumber(0,600));
                         else
-                            gameController.addDynamicCircle(GameKernel::randomNumber(0,800),GameKernel::randomNumber(0,600));
+                            gameController.addDynamicCircle(GameKernel::randomNumber(0,800),GameKernel::randomNumber(0,600), material);
 
                         break;
                     }
@@ -147,7 +152,7 @@ int main(int argc, char **argv)
                             grabMode = true;
                         break;
                     }
-                     case sf::Key::H: //activate/desactivate grab mode
+                    case sf::Key::H: //activate/desactivate grab mode
                     {
                         if(!helpMode)
                         {
@@ -161,6 +166,17 @@ int main(int argc, char **argv)
                         }
                         break;
                     }
+                    //materials
+                    case sf::Key::Num1: material = Material::DEFAULT; materialStr = "Default"; break;
+                    case sf::Key::Num2: material = Material::METAL; materialStr = "Metal"; break;
+                    case sf::Key::Num3: material = Material::STONE; materialStr = "Stone"; break;
+                    case sf::Key::Num4: material = Material::WOOD; materialStr = "Wood"; break;
+                    case sf::Key::Num5: material = Material::GLASS; materialStr = "Glass"; break;
+                    case sf::Key::Num6: material = Material::RUBBER; materialStr = "Rubber"; break;
+                    case sf::Key::Num7: material = Material::ICE; materialStr = "Ice"; break;
+                    case sf::Key::Num8: material = Material::PUMICE; materialStr = "Pumice"; break;
+                    case sf::Key::Num9: material = Material::POLYSTYRENE; materialStr = "Polystyrene"; break;
+                    case sf::Key::Num0: material = Material::SPONGE; materialStr = "Sponge"; break;
                 }
             }
             if(Event.Type == sf::Event::MouseButtonPressed)
@@ -264,7 +280,7 @@ int main(int argc, char **argv)
                         if(staticMode)
                             gameController.addStaticBox(tempP1x,tempP1y,wX/2,hY/2);
                         else
-                            gameController.addDynamicBox(tempP1x,tempP1y,wX/2,hY/2);
+                            gameController.addDynamicBox(tempP1x,tempP1y,wX/2,hY/2, material);
 
                     }
                     else
@@ -272,7 +288,7 @@ int main(int argc, char **argv)
                        if(staticMode)
                             gameController.addStaticCircle(p1x,p1y,(p2x-p1x));
                         else
-                            gameController.addDynamicCircle(p1x,p1y,(p2x-p1x));
+                            gameController.addDynamicCircle(p1x,p1y,(p2x-p1x), material);
                     }
                 }
                 else
@@ -308,12 +324,15 @@ int main(int argc, char **argv)
             gameController.getdebugDraw()->DrawString(100,100,helpString.c_str());
         }
 
+        //print actual material
+        gameController.getdebugDraw()->DrawString(0,50,materialStr.c_str());
+
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.
 		if(!pause)
             pWorld->Step(timeStep, velocityIterations, positionIterations);
         else
-            gameController.getdebugDraw()->DrawString(0,50,"*PAUSE*");
+            gameController.getdebugDraw()->DrawString(0,70,"*PAUSE*");
 
 		// Clear applied body forces. We didn't apply any forces, but you
         // should know about this function.

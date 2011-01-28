@@ -100,7 +100,7 @@ DebugDraw* GameKernel::getdebugDraw()
         return GameKernel::debugDraw;
 }
 
-void GameKernel::addDynamicBox(int x, int y)
+void GameKernel::addDynamicBox(int x, int y, Material material)
 {
     b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -113,9 +113,9 @@ void GameKernel::addDynamicBox(int x, int y)
 	fixtureDef.shape = &dynamicBox;
 
 	/////add material class in the futurec.
-	fixtureDef.density = 0.6f;
-	fixtureDef.friction = 0.4f;
-	fixtureDef.restitution = 0.6f;
+    fixtureDef.density = material.getDensity();
+    fixtureDef.friction = material.getFriction();
+    fixtureDef.restitution = material.getRestitution();
 	//////
 
 	bodyBox->CreateFixture(&fixtureDef);
@@ -126,7 +126,7 @@ void GameKernel::addDynamicBox(int x, int y)
      std::cout << "[Box2D] Adding dynamic rectangle \n";
 }
 
-void GameKernel::addDynamicBox(int x, int y, float heigth, float widgth)
+void GameKernel::addDynamicBox(int x, int y, float heigth, float widgth, Material material)
 {
      b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -138,9 +138,9 @@ void GameKernel::addDynamicBox(int x, int y, float heigth, float widgth)
 	fixtureDef.shape = &dynamicBox;
 
 	/////add material class in the futurec.
-	fixtureDef.density = 0.6f;
-	fixtureDef.friction = 0.4f;
-	fixtureDef.restitution = 0.6f;
+    fixtureDef.density = material.getDensity();
+    fixtureDef.friction = material.getFriction();
+    fixtureDef.restitution = material.getRestitution();
 	//////
 
 	bodyBox->CreateFixture(&fixtureDef);
@@ -186,7 +186,7 @@ void GameKernel::addStaticBox(int x, int y, float heigth, float widgth)
      std::cout << "[Box2D] Adding static rectangle \n";
 }
 
-void GameKernel::addDynamicCircle(int x, int y)
+void GameKernel::addDynamicCircle(int x, int y, Material material)
 {
     b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -197,9 +197,9 @@ void GameKernel::addDynamicCircle(int x, int y)
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicCircle;
 
-    fixtureDef.density = 0.5f;
-    fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.5f;
+    fixtureDef.density = material.getDensity();
+    fixtureDef.friction = material.getFriction();
+    fixtureDef.restitution = material.getRestitution();
 
     bdCircle->CreateFixture(&fixtureDef);
 
@@ -209,7 +209,7 @@ void GameKernel::addDynamicCircle(int x, int y)
     std::cout << "[Box2D] Adding dynamic circle \n";
 }
 
-void GameKernel::addDynamicCircle(int x, int y, float radius)
+void GameKernel::addDynamicCircle(int x, int y, float radius, Material material)
 {
     b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -220,9 +220,9 @@ void GameKernel::addDynamicCircle(int x, int y, float radius)
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicCircle;
 
-    fixtureDef.density = 0.5f;
-    fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.5f;
+    fixtureDef.density = material.getDensity();
+    fixtureDef.friction = material.getFriction();
+    fixtureDef.restitution = material.getRestitution();
 
     bdCircle->CreateFixture(&fixtureDef);
 
