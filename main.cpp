@@ -25,6 +25,7 @@
 #include "GameKernel.h"
 #include "DebugDraw.h"
 #include "Globals.h"
+#include "QueryCallback.h"
 using namespace std;
 
 int main(int argc, char **argv)
@@ -46,6 +47,7 @@ int main(int argc, char **argv)
     sf::Event Event;
     bool pause = false;
     bool staticMode= false;
+    bool grabMode= false;
     bool debugString= true;
     int p1x,p1y,p2x,p2y; //for the creation of boxes with the mouse;
     bool mouseIsPressed = false; //needed to know if we have to draw
@@ -57,6 +59,11 @@ int main(int argc, char **argv)
     sf::Sprite bkSprite;
     sf::Image bkImage;
     gameController.setBackground("resources/backgrounds/logoHD.png", &bkImage, &bkSprite);
+
+    //for the joints
+    b2BodyDef bodyDef;
+	b2Body* groundBody = pWorld->CreateBody(&bodyDef);
+	b2MouseJoint* mouseJoint;
 
 	while(rWindow->IsOpened())
 	{
@@ -120,67 +127,138 @@ int main(int argc, char **argv)
 
                         break;
                     }
+                    case sf::Key::G: //activate/desactivate grab mode
+                    {
+                        if(grabMode)
+                            grabMode = false;
+                        else
+                            grabMode = true;
+                        break;
+                    }
                 }
             }
             if(Event.Type == sf::Event::MouseButtonPressed)
             {
                 mouseIsPressed = true;
+
                 p1x = input.GetMouseX();
                 p1y = input.GetMouseY();
 
-                switch (Event.MouseButton.Button)
+                if(!grabMode)
                 {
-                    case sf::Mouse::Left: isForBox = true; break;
-                    case sf::Mouse::Right: isForBox = false; break;
+                    switch (Event.MouseButton.Button)
+                    {
+                        case sf::Mouse::Left: isForBox = true; break;
+                        case sf::Mouse::Right: isForBox = false; break;
+                    }
+                }
+                else
+                {
+                    // Make a small box.
+                    b2Vec2 p;
+
+                    p.x = p1x*UNRATIO;
+                    p.y = p1y*UNRATIO;
+
+                    b2AABB aabb;
+                    b2Vec2 d;
+                    d.Set(0.001f, 0.001f);
+                    aabb.lowerBound = p + d;
+                    aabb.upperBound = p - d;
+
+                    QueryCallback callback(p);
+                    pWorld->QueryAABB(&callback, aabb);
+
+                    if (callback.m_fixture)
+                    {
+                        b2Body* body = callback.m_fixture->GetBody();
+                        b2MouseJointDef md;
+                        md.bodyA = groundBody;
+                        md.bodyB = body;
+                        md.target = p;
+                        md.maxForce = 1000.0f * body->GetMass();
+                        mouseJoint = (b2MouseJoint*)pWorld->CreateJoint(&md);
+                        body->SetAwake(true);
+                        std::cout << "[Box2D][new] joint created\n";
+                    }
+
                 }
             }
             if(Event.Type == sf::Event::MouseMoved && mouseIsPressed)
             {
                 p2x = input.GetMouseX();
                 p2y = input.GetMouseY();
-                if (isForBox)
+                if (!grabMode)
                 {
-                    drawingMouseBox = sf::Shape::Rectangle(p1x, p1y, p2x, p2y, sf::Color::White,1, sf::Color::White);
-                    drawingMouseBox.EnableFill(false);
-                    drawingMouseBox.EnableOutline(true);
+                    if (isForBox)
+                    {
+                        drawingMouseBox = sf::Shape::Rectangle(p1x, p1y, p2x, p2y, sf::Color::White,1, sf::Color::White);
+                        drawingMouseBox.EnableFill(false);
+                        drawingMouseBox.EnableOutline(true);
+
+                    }
+                    else
+                    {
+                        drawingMouseBox = sf::Shape::Circle(p1x, p1y, p2x-p1x, sf::Color::White, 1, sf::Color::White);
+                        drawingMouseBox.EnableFill(false);
+                        drawingMouseBox.EnableOutline(true);
+                    }
 
                 }
                 else
                 {
-                    drawingMouseBox = sf::Shape::Circle(p1x, p1y, p2x-p1x, sf::Color::White, 1, sf::Color::White);
-                    drawingMouseBox.EnableFill(false);
-                    drawingMouseBox.EnableOutline(true);
+                    //move the joint (and the object)
+                    if (mouseJoint)
+                    {
+                        b2Vec2 p;
+                        p.x = p2x*UNRATIO;
+                        p.y = p2y*UNRATIO;
+                        mouseJoint->SetTarget(p);
+                    }
                 }
             }
 
              if(Event.Type == sf::Event::MouseButtonReleased)
             {
                 mouseIsPressed = false;
-                drawingMouseBox.EnableOutline(false); //because there is a second that shows in other position, sow we do "transparent"
-                if (isForBox)
+
+                if(!grabMode)
                 {
-                    //calculate good coordinates (from upper-left, not center) for box2D (box2D is with center, sfml no)
-                    int tempP1x, tempP1y, wX, hY;
+                    drawingMouseBox.EnableOutline(false); //because there is a second that shows in other position, sow we do "transparent"
+                    if (isForBox)
+                    {
+                        //calculate good coordinates (from upper-left, not center) for box2D (box2D is with center, sfml no)
+                        int tempP1x, tempP1y, wX, hY;
 
-                    wX = p2x-p1x;
-                    hY = p2y-p1y;
-                    tempP1x = p1x+wX/2;
-                    tempP1y = p1y+hY/2;
+                        wX = p2x-p1x;
+                        hY = p2y-p1y;
+                        tempP1x = p1x+wX/2;
+                        tempP1y = p1y+hY/2;
 
-                    if(staticMode)
-                        gameController.addStaticBox(tempP1x,tempP1y,wX/2,hY/2);
+                        if(staticMode)
+                            gameController.addStaticBox(tempP1x,tempP1y,wX/2,hY/2);
+                        else
+                            gameController.addDynamicBox(tempP1x,tempP1y,wX/2,hY/2);
+
+                    }
                     else
-                        gameController.addDynamicBox(tempP1x,tempP1y,wX/2,hY/2);
-
+                    {
+                       if(staticMode)
+                            gameController.addStaticCircle(p1x,p1y,(p2x-p1x));
+                        else
+                            gameController.addDynamicCircle(p1x,p1y,(p2x-p1x));
+                    }
                 }
                 else
                 {
-                   if(staticMode)
-                        gameController.addStaticCircle(p1x,p1y,(p2x-p1x));
-                    else
-                        gameController.addDynamicCircle(p1x,p1y,(p2x-p1x));
+                    //delete joint
+                    if (mouseJoint)
+                    {
+                        pWorld->DestroyJoint(mouseJoint);
+                        mouseJoint = NULL;
+                        std::cout << "[Box2D][delete] joint created\n";
+                    }
                 }
-
             }
         }
 
@@ -192,7 +270,12 @@ int main(int argc, char **argv)
         //draw debug
         pWorld->DrawDebugData();
         rWindow->Draw(bkSprite);
-
+        if (mouseJoint)
+        {
+            b2Vec2 p1 = mouseJoint->GetAnchorB();
+            b2Vec2 p2 = mouseJoint->GetTarget();
+            gameController.getdebugDraw()->DrawMouseJoint(p1, p2, b2Color(0.0f, 1.0f, 0.0f), b2Color(0.8f, 0.8f, 0.8f));
+        }
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.
 		if(!pause)

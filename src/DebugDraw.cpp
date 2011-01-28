@@ -39,6 +39,14 @@ sf::Color DebugDraw::B2SFColor(const b2Color &color, int alpha = 255)
 
 void DebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 {
+	sf::Shape polygon;
+    polygon.AddPoint(aabb->lowerBound.x*RATIO, aabb->lowerBound.y*RATIO, this->B2SFColor(color, 50), this->B2SFColor(color));
+    polygon.AddPoint(aabb->upperBound.x*RATIO, aabb->lowerBound.y*RATIO, this->B2SFColor(color, 50), this->B2SFColor(color));
+    polygon.AddPoint(aabb->upperBound.x*RATIO, aabb->upperBound.y*RATIO, this->B2SFColor(color, 50), this->B2SFColor(color));
+    polygon.AddPoint(aabb->lowerBound.x*RATIO, aabb->upperBound.y*RATIO, this->B2SFColor(color, 50), this->B2SFColor(color));
+
+    polygon.SetOutlineWidth(1.0f);
+	this->window->Draw(polygon);
     std::cout << "DrawAABB\n";
 }
 
@@ -130,5 +138,39 @@ void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2C
 	polygon.SetOutlineWidth(1.0f);
 	polygon.EnableFill(false);
 	this->window->Draw(polygon);
+}
+
+
+void DebugDraw::DrawMouseJoint(b2Vec2& p1, b2Vec2& p2, const b2Color &boxColor, const b2Color &lineColor)
+{
+    sf::Shape polygon;
+    sf::Shape polygon2;
+    float p1x = p1.x * RATIO;
+    float p1y = p1.y * RATIO;
+    float p2x = p2.x * RATIO;
+    float p2y = p2.y * RATIO;
+    float size = 4.0f;
+
+    sf::Color boxClr = this->B2SFColor(boxColor);
+    sf::Color lineClr = this->B2SFColor(lineColor);
+
+    //first green box for the joint
+    polygon.AddPoint(p1x-size/2, p1y-size/2, boxClr);
+    polygon.AddPoint(p1x+size/2, p1y-size/2, boxClr);
+    polygon.AddPoint(p1x+size/2, p1y+size/2, boxClr);
+    polygon.AddPoint(p1x-size/2, p1y+size/2, boxClr);
+
+    //second green box for the joint
+    polygon2.AddPoint(p2x-size/2, p2y-size/2, boxClr);
+    polygon2.AddPoint(p2x+size/2, p2y-size/2, boxClr);
+    polygon2.AddPoint(p2x+size/2, p2y+size/2, boxClr);
+    polygon2.AddPoint(p2x-size/2, p2y+size/2, boxClr);
+
+    sf::Shape line = sf::Shape::Line(p1x, p1y, p2x, p2y, 1, lineClr);
+    line.EnableFill(true);
+
+    this->window->Draw(polygon);
+    this->window->Draw(polygon2);
+    this->window->Draw(line);
 }
 
