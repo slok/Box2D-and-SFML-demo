@@ -18,10 +18,6 @@
 
 #include "DebugDraw.h"
 
-//static member data
-
-
-
 DebugDraw::DebugDraw(sf::RenderWindow &window)
 {
         this->window = &window;
