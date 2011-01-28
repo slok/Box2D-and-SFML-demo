@@ -49,6 +49,7 @@ int main(int argc, char **argv)
     bool staticMode= false;
     bool grabMode= false;
     bool debugString= true;
+    bool helpMode= false;
     int p1x,p1y,p2x,p2y; //for the creation of boxes with the mouse;
     bool mouseIsPressed = false; //needed to know if we have to draw
     bool isForBox = true; // needed to know if we have to draw a box or a circle
@@ -59,6 +60,15 @@ int main(int argc, char **argv)
     sf::Sprite bkSprite;
     sf::Image bkImage;
     gameController.setBackground("resources/backgrounds/logoHD.png", &bkImage, &bkSprite);
+
+    //help string
+    std::string  helpString =   "    *H: Enable/disable this help\n\
+    *S: switch between static and dynamic bodies\n\
+    *P: Pause/unpause the game\n\
+    *Space: Aleatory box\n\
+    *Enter: Aleatory circle\n\
+    *Right click: if not grab mode, add circle (move and release )\n\
+    *Left click: if not grab mode, add box (move and release)";
 
     //for the joints
     b2BodyDef bodyDef;
@@ -76,6 +86,7 @@ int main(int argc, char **argv)
 
             if(Event.Type == sf::Event::KeyPressed)//key press events
             {
+
                 switch (Event.Key.Code)
                 {
                     //close events
@@ -133,6 +144,20 @@ int main(int argc, char **argv)
                             grabMode = false;
                         else
                             grabMode = true;
+                        break;
+                    }
+                     case sf::Key::H: //activate/desactivate grab mode
+                    {
+                        if(!helpMode)
+                        {
+                            helpMode = true;
+                            pause = true;
+                        }
+                        else
+                        {
+                            helpMode = false;
+                            pause = false;
+                        }
                         break;
                     }
                 }
@@ -256,26 +281,32 @@ int main(int argc, char **argv)
                     {
                         pWorld->DestroyJoint(mouseJoint);
                         mouseJoint = NULL;
-                        std::cout << "[Box2D][delete] joint created\n";
+                        std::cout << "[Box2D][delete] joint deleted\n";
                     }
                 }
             }
         }
 
-        /*cout << "p1: (" << p1x << "," << p1y << ")\n";
-        cout << "p2: (" << p2x << "," << p2y << ")\n";*/
         rWindow->Clear();
-        //draw background
-        //rWindow.Draw(backgroundSprite);
+
         //draw debug
         pWorld->DrawDebugData();
         rWindow->Draw(bkSprite);
-        if (mouseJoint)
+
+        //if there is a mouse joint, draw the joints and the line
+        if(mouseJoint)
         {
             b2Vec2 p1 = mouseJoint->GetAnchorB();
             b2Vec2 p2 = mouseJoint->GetTarget();
             gameController.getdebugDraw()->DrawMouseJoint(p1, p2, b2Color(0.0f, 1.0f, 0.0f), b2Color(0.8f, 0.8f, 0.8f));
         }
+
+        //draw help string
+        if(helpMode)
+        {
+            gameController.getdebugDraw()->DrawString(100,100,helpString.c_str());
+        }
+
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.
 		if(!pause)
