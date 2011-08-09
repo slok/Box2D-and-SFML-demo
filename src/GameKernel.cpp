@@ -292,11 +292,17 @@ void GameKernel::setWindowIcon(std::string imagePath)
 
 void GameKernel::setBackground(std::string imagePath, sf::Image *background, sf::Sprite *bkSprite)
 {
-    background->LoadFromFile("resources/backgrounds/logoHD.png");
-    bkSprite->SetPosition(0,0);
-    bkSprite->SetImage(*background);
-    bkSprite->Resize(this->resWidgth,this->resHeigth);
-    bkSprite->SetColor(sf::Color(255,255,255,150)); //alpha
+    int alpha = 255;
+    if (!imagePath.empty())
+    {
+        background->LoadFromFile(imagePath);
+        bkSprite->SetImage(*background);
+        bkSprite->SetPosition(0,0);
+        bkSprite->Resize(this->resWidgth,this->resHeigth);
+        alpha = 150;
+    }
+    bkSprite->SetColor(sf::Color(255,255,255,alpha)); //alpha
+   
 }
 
 void GameKernel::printDebugInfo()
