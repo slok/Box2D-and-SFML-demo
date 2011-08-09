@@ -32,7 +32,7 @@ Features
 
 Author
 ------
-Xabier (sLoK) Larrakoetxea <slok69 [at] gmail.com>
+Xabier (sLoK) Larrakoetxea [slok69 [at] gmail.com]
 
 License
 -------
