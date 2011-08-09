@@ -12,6 +12,8 @@ Dependencies
 
 Build & execute
 ---------------
+### GNU/Linux
+
     mkdir ./build
     cd ./build
     cmake ..
@@ -19,6 +21,20 @@ Build & execute
     make install
     cd ../
     ./box2dsfml
+
+### Windows
+You need a compiler like mingw and CMake
+In windows you have to set the env variabes. To do this add to PATH env. variable the location of this 3 paths:
+
+* The lib directory of SFML (where the SFML libs are: *.a, *.dll... )
+* The include directory of SFML (Where "SFML" folder is)
+* The lib directory where Box2D lib file is (In my case the lib is called: libBox2D.a)
+* The include directory of Box2D (Where "Box2D" folder is)
+
+The PATH variable you should add (note: add ';' at the front) at the end of the PATH is something like this (Note that my Box2D lib is in the same folder of the Box2D header dir so I only add one path for the box2D)  
+	C:\sources\SFML-1.6\include;C:\sources\SFML-1.6\lib;C:\sources\Box2D_v2.1.2_bin
+
+Then use the same way to compile as in GNU/Linux (for example with mingw32-make)
 
 Features
 --------
