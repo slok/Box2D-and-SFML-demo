@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     //for the joints
     b2BodyDef bodyDef;
 	b2Body* groundBody = pWorld->CreateBody(&bodyDef);
-	b2MouseJoint* mouseJoint;
+	b2MouseJoint* mouseJoint = NULL;
 
     //material of the bodies
     Material material = Material::DEFAULT;
@@ -250,7 +250,7 @@ int main(int argc, char **argv)
                 else
                 {
                     //move the joint (and the object)
-                    if (mouseJoint)
+                    if (mouseJoint != NULL)
                     {
                         b2Vec2 p;
                         p.x = p2x*UNRATIO;
@@ -294,7 +294,7 @@ int main(int argc, char **argv)
                 else
                 {
                     //delete joint
-                    if (mouseJoint)
+                    if (mouseJoint != NULL)
                     {
                         pWorld->DestroyJoint(mouseJoint);
                         mouseJoint = NULL;
@@ -311,7 +311,7 @@ int main(int argc, char **argv)
         rWindow->Draw(bkSprite);
 
         //if there is a mouse joint, draw the joints and the line
-        if(mouseJoint)
+        if(mouseJoint != NULL)
         {
             b2Vec2 p1 = mouseJoint->GetAnchorB();
             b2Vec2 p2 = mouseJoint->GetTarget();
