@@ -22,8 +22,8 @@ Build & execute
     cd ../
     ./box2dsfml
 ### Windows
-You need a compiler like [Mingw]() and [CMake]()
-In windows you have to set the env variables. To do this add to the PATH env. variable the location of this 4 paths
+You need a compiler like [Mingw](http://www.mingw.org/) and [CMake](http://www.cmake.org/)
+In windows you have to set the env variables. To do this, add to the PATH the location of this 4 paths
 
 * The lib directory of SFML (Where the SFML libs are: "*.a, *.dll ...") 
 * The headers directory of SFML (Where "SFML" folder is)
