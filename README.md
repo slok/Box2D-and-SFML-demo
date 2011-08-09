@@ -35,6 +35,14 @@ The PATH variable you should add (note: add ';' at the front) at the end of the 
 	C:\sources\SFML-1.6\include;C:\sources\SFML-1.6\lib;C:\sources\Box2D_v2.1.2_bin
 
 Then use the same way to compile as in GNU/Linux (for example with mingw32-make)
+	mkdir ./build
+	[run cmake-gui]
+	[select project and build dir]
+	[push generate]
+	[enter with cmd in build dir]
+	mingw32-make
+	mingw32-make install
+	[if install fails, copy the executable in '/build/src/box2dsfml' to the root of the project (where resources folder is)]
 
 Features
 --------
