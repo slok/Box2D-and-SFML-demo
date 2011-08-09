@@ -59,7 +59,8 @@ int main(int argc, char **argv)
 
     sf::Sprite bkSprite;
     sf::Image bkImage;
-    gameController.setBackground("", &bkImage, &bkSprite);
+    
+    gameController.setBackground("", &bkImage, &bkSprite); //without background path
 
     //help string
     std::string  helpString =   "    *H: Enable/disable this help\n\
