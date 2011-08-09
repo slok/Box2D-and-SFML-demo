@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Material.h"
+#include "../include/Material.h"
 
 //Static member data
 const Material Material::DEFAULT(1.00f,  0.30f, 0.1f);

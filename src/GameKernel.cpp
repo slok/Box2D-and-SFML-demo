@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "GameKernel.h"
+#include "../include/GameKernel.h"
 
 //re-declare statics
 sf::RenderWindow *GameKernel::app;

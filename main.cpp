@@ -22,10 +22,10 @@
 #include <Box2D/Box2D.h>
 #include <cstdio>
 
-#include "GameKernel.h"
-#include "DebugDraw.h"
-#include "Globals.h"
-#include "QueryCallback.h"
+#include "include/GameKernel.h"
+#include "include/DebugDraw.h"
+#include "include/Globals.h"
+#include "include/QueryCallback.h"
 using namespace std;
 
 int main(int argc, char **argv)
