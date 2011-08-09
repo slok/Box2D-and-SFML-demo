@@ -32,17 +32,17 @@ In windows you have to set the env variabes. To do this add to PATH env. variabl
 * The include directory of Box2D (Where "Box2D" folder is)
 
 The PATH variable you should add (note: add ';' at the front) at the end of the PATH is something like this (Note that my Box2D lib is in the same folder of the Box2D header dir so I only add one path for the box2D)  
-	C:\sources\SFML-1.6\include;C:\sources\SFML-1.6\lib;C:\sources\Box2D_v2.1.2_bin
+    C:\sources\SFML-1.6\include;C:\sources\SFML-1.6\lib;C:\sources\Box2D_v2.1.2_bin
 
 Then use the same way to compile as in GNU/Linux (for example with mingw32-make)
-	mkdir ./build
-	[run cmake-gui]
-	[select project and build dir]
-	[push generate]
-	[enter with cmd in build dir]
-	mingw32-make
-	mingw32-make install
-	[if install fails, copy the executable in '/build/src/box2dsfml' to the root of the project (where resources folder is)]
+    mkdir ./build
+    [run cmake-gui]
+    [select project and build dir]
+    [push generate]
+    [enter with cmd in build dir]
+    mingw32-make
+    mingw32-make install
+    [if install fails, copy the executable in '/build/src/box2dsfml' to the root of the project (where resources folder is)]
 
 Features
 --------
