@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "QueryCallback.h"
+#include "../include/QueryCallback.h"
 
 QueryCallback::QueryCallback(const b2Vec2& point)
 {
