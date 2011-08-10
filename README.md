@@ -10,6 +10,11 @@ Dependencies
 * [SFML](http://www.sfml-dev.org/) >= 1.6
 * [Box2D](http://www.box2d.org/) >= 2.1.2
 
+Screenshot
+-------------
+
+![Box2D-and-SML-demo screenshot](http://ompldr.org/vOXUwdw/box2dsfml.png)
+
 Build & execute
 ---------------
 ### GNU/Linux
