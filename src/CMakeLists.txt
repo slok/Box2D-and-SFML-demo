@@ -28,7 +28,7 @@ set(SRC
 )
 
 find_package(SFML REQUIRED COMPONENTS System Window Graphics)
-find_package(BOX2D REQUIRED)
+find_package(Box2D REQUIRED)
 
 #set headers stuff
 set(INCLUDE_DIRS
