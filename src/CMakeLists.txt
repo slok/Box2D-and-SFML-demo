@@ -39,7 +39,7 @@ set(INCLUDE_DIRS
 
 #set lib stuff
 set(DEPEND_LIBS
-    ${SFML_LIBRARY}
+    ${SFML_LIBRARIES}
     ${BOX2D_LIBRARY}
 )
 
