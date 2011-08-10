@@ -13,7 +13,7 @@ Dependencies
 Screenshot
 -------------
 
-![Box2D-and-SML-demo screenshot](http://ompldr.org/vOXUwdw/box2dsfml.png)
+![Box2D-and-SML-demo screenshot](https://github.com/slok/Box2D-and-SFML-demo/raw/master/resources/screenshot/box2dsfml.png)
 
 Build & execute
 ---------------
